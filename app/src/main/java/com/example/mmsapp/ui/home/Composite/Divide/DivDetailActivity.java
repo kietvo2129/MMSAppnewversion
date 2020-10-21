@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import com.example.mmsapp.ui.home.Composite.WorkerActivity;
 import com.example.mmsapp.ui.home.Manufacturing.ManufacturingActivity;
 import com.example.mmsapp.ui.home.Mapping.MappingActivity;
 import com.example.mmsapp.ui.home.Mapping.MappingDetailActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -54,6 +58,8 @@ public class DivDetailActivity extends AppCompatActivity {
     String value_old ="";
     String wmtid_end ="";
     String wmtidclick = "";
+    FloatingActionButton scan;
+    FloatingActionButton input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +73,63 @@ public class DivDetailActivity extends AppCompatActivity {
         nodata.setVisibility(View.GONE);
         dialog = new ProgressDialog(this, R.style.AlertDialogCustom);
 
-    }
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IntentIntegrator(DivDetailActivity.this).initiateScan();
+            }
+        });
 
+        input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputData();
+            }
+        });
+    }
+    private void inputData() {
+
+        final Dialog dialog = new Dialog(DivDetailActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        View dialogView = LayoutInflater.from(DivDetailActivity.this).inflate(R.layout.popup_input, null);
+        dialog.setCancelable(false);
+        dialog.setContentView(dialogView);
+        dialog.findViewById(R.id.btclose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        final EditText Containercode = dialog.findViewById(R.id.Containercode);
+        final Button confirm = dialog.findViewById(R.id.confirm);
+        final TextInputLayout h2;
+
+        h2 = dialog.findViewById(R.id.H2);
+
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Containercode.getText().toString() == null || Containercode.getText().toString().length() == 0) {
+                    h2.setError("Please, Input here.");
+                    return;
+                }  else {
+                    h2.setError(null);
+                    new savechangeDetail().execute(webUrl+"ActualWO/Changebb_dv?bb_no=" +
+                            Containercode.getText().toString() +
+                            "&wmtid=" +
+                            wmtidclick);
+                    dialog.dismiss();
+                }
+
+
+            }
+        });
+
+
+        dialog.show();
+
+    }
     @Override
     protected void onPostResume() {
         getData();
@@ -160,6 +221,9 @@ public class DivDetailActivity extends AppCompatActivity {
             @Override
             public void changebb(int position) {
 
+
+
+
                 wmtidclick = divDetailMasterArrayList.get(position).wmtid;
                 androidx.appcompat.app.AlertDialog.Builder alertDialog = new androidx.appcompat.app.AlertDialog.Builder(DivDetailActivity.this, R.style.AlertDialogCustom);
                 alertDialog.setCancelable(false);
@@ -183,8 +247,14 @@ public class DivDetailActivity extends AppCompatActivity {
     }
 
     private void starScan() {
-        new IntentIntegrator(this).initiateScan();
 
+        if (input.getVisibility()==View.VISIBLE){
+            input.setVisibility(View.GONE);
+            scan.setVisibility(View.GONE);
+        }else {
+            input.setVisibility(View.VISIBLE);
+            scan.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -97,11 +97,9 @@
                     android:layout_toEndOf="@+id/title_from_to_dots"
                     android:layout_toRightOf="@+id/title_from_to_dots"
                     android:src="@color/contentDividerLine" />
-
                 <TextView
-                    android:id="@+id/container"
+                    android:id="@+id/pqcww"
                     style="@style/texthaitam"
-                    android:background="@color/colorbackgound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/title_from_to_dots_divider"
@@ -109,8 +107,22 @@
                     android:layout_toRightOf="@id/title_from_to_dots"
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
-                    android:paddingHorizontal="4dp"
-                    android:paddingVertical="4dp"
+                    android:paddingVertical="8dp"
+                    android:singleLine="true"
+                    android:text="Check PQC: " />
+                <TextView
+                    android:id="@+id/container"
+                    style="@style/texthaitam"
+                    android:background="@color/colorbackgound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_from_to_dots_divider"
+                    android:layout_toEndOf="@id/pqcww"
+                    android:layout_toRightOf="@id/title_from_to_dots"
+                    android:ellipsize="marquee"
+                    android:fadingEdge="horizontal"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="8dp"
                     android:singleLine="true"
                     android:text="dashjdghdgd" />
             </RelativeLayout>

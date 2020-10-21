@@ -148,14 +148,26 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/from_to_purple" />
-
+                <TextView
+                    android:id="@+id/containerr"
+                    style="@style/texthaitam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/title_from_to_dots"
+                    android:layout_toEndOf="@+id/title_from_to_dots"
+                    android:layout_toRightOf="@+id/title_from_to_dots"
+                    android:ellipsize="marquee"
+                    android:fadingEdge="horizontal"
+                    android:paddingVertical="4dp"
+                    android:singleLine="true"
+                    android:text="Container: " />
                 <TextView
                     android:id="@+id/container"
                     style="@style/texthaitam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/title_from_to_dots"
-                    android:layout_toEndOf="@+id/title_from_to_dots"
+                    android:layout_toEndOf="@+id/containerr"
                     android:layout_toRightOf="@+id/title_from_to_dots"
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
@@ -173,9 +185,8 @@
                     android:layout_toEndOf="@+id/title_from_to_dots"
                     android:layout_toRightOf="@+id/title_from_to_dots"
                     android:src="@color/contentDividerLine" />
-
                 <TextView
-                    android:id="@+id/pqc"
+                    android:id="@+id/pqcww"
                     style="@style/texthaitam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,8 +195,21 @@
                     android:layout_toRightOf="@id/title_from_to_dots"
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
+                    android:paddingVertical="8dp"
+                    android:singleLine="true"
+                    android:text="Check PQC: " />
+                <TextView
+                    android:id="@+id/pqc"
+                    style="@style/texthaitam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_from_to_dots_divider"
+                    android:layout_toEndOf="@id/pqcww"
+                    android:layout_toRightOf="@id/title_from_to_dots"
+                    android:ellipsize="marquee"
+                    android:fadingEdge="horizontal"
                     android:paddingHorizontal="4dp"
-                    android:paddingVertical="4dp"
+                    android:paddingVertical="8dp"
                     android:singleLine="true"
                     android:text="dashjdghdgd" />
             </RelativeLayout>

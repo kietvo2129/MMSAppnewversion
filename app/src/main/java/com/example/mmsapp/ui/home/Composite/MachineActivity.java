@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,13 +13,18 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mmsapp.AlerError.AlerError;
 import com.example.mmsapp.MainActivity;
 import com.example.mmsapp.R;
 import com.example.mmsapp.Url;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -43,6 +49,8 @@ public class MachineActivity extends AppCompatActivity {
 
     String mc_no ="",use_unuse="";
 
+    FloatingActionButton scan;
+    FloatingActionButton input;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +60,78 @@ public class MachineActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         recyclerView = findViewById(R.id.recyclerView);
         getData(page);
+        scan = findViewById(R.id.scan);
+        input = findViewById(R.id.input);
+        input.setVisibility(View.GONE);
+        scan.setVisibility(View.GONE);
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scanMachine();
+                if (input.getVisibility()==View.VISIBLE){
+                    input.setVisibility(View.GONE);
+                    scan.setVisibility(View.GONE);
+                }else {
+                    input.setVisibility(View.VISIBLE);
+                    scan.setVisibility(View.VISIBLE);
+                }
 
             }
         });
-    }
 
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanMachine();
+            }
+        });
+
+        input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputData();
+            }
+        });
+    }
+    private void inputData() {
+
+        final Dialog dialog = new Dialog(MachineActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        View dialogView = LayoutInflater.from(MachineActivity.this).inflate(R.layout.popup_input, null);
+        dialog.setCancelable(false);
+        dialog.setContentView(dialogView);
+        dialog.findViewById(R.id.btclose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        final EditText Containercode = dialog.findViewById(R.id.Containercode);
+        final Button confirm = dialog.findViewById(R.id.confirm);
+        final TextInputLayout h2;
+
+        h2 = dialog.findViewById(R.id.H2);
+
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Containercode.getText().toString() == null || Containercode.getText().toString().length() == 0) {
+                    h2.setError("Please, Input here.");
+                    return;
+                }  else {
+                    h2.setError(null);
+                    findscanMachine(Containercode.getText().toString());
+                    dialog.dismiss();
+                }
+
+
+            }
+        });
+
+
+        dialog.show();
+
+    }
     private void scanMachine() {
         new IntentIntegrator(this).initiateScan();
     }
