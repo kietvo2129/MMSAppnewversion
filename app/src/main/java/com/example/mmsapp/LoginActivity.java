@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,21 +39,24 @@ public class LoginActivity extends AppCompatActivity {
     private String TAG = LoginActivity.class.getSimpleName();
 
     private static final int MIN_LENGTH = 3;
-    String Url = webUrl;
-
+    private String [] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW","android.permission.CAMERA"};
     private EditText userLoginEditText;
     private EditText userFullNameEditText;
     Button btnsignup;
     private SharedPreferences sharedPreferences;
     private ProgressDialog dialog;
-    TextView version;
+    TextView version,tv_urlweb;
     TextInputLayout h2;
     TextInputLayout h1;
     public static void start(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
-    private String [] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.READ_PHONE_STATE", "android.permission.SYSTEM_ALERT_WINDOW","android.permission.CAMERA"};
+
+    private String ServerSSO = "http://messhinsungcntvina.com:83/";
+    private String ServerSSL = "http://192.168.1.251:83/";
+    SharedPreferences luu_Url;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,12 +73,28 @@ public class LoginActivity extends AppCompatActivity {
         h1 = findViewById(R.id.H1);
         h2 = findViewById(R.id.H2);
         dialog = new ProgressDialog(this);
-        sharedPreferences = getSharedPreferences("datalogin", MODE_PRIVATE);
 
 
         int versionCode = BuildConfig.VERSION_CODE;
         String versionName = BuildConfig.VERSION_NAME;
         version.setText("Version: " + versionName);
+        sharedPreferences = getSharedPreferences("datalogin", MODE_PRIVATE);
+        luu_Url = getSharedPreferences("dataUrl", MODE_PRIVATE);
+        Url.webUrl = luu_Url.getString("url",ServerSSO);
+
+        String url = luu_Url.getString("url",ServerSSO);
+        tv_urlweb = findViewById(R.id.tv_urlweb);
+
+        tv_urlweb.setText(url);
+        tv_urlweb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showChangeUrl();
+
+            }
+        });
+
 
 
         userLoginEditText.addTextChangedListener(new TextWatcher() {
@@ -111,9 +131,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,12 +150,38 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     h1.setError(null);
                     h2.setError(null);
-                    Log.d("Login",Url +"home/API_Login?" + "user=" + userFullNameEditText.getText().toString() + "&password=" + userLoginEditText.getText().toString()+"&type=MMS");
-                    new docJSON().execute(Url + "home/API_Login?" + "user=" + userFullNameEditText.getText().toString() + "&password=" + userLoginEditText.getText().toString()+"&type=MMS");
+                    Log.d("Login",webUrl +"home/API_Login?" + "user=" + userFullNameEditText.getText().toString() + "&password=" + userLoginEditText.getText().toString()+"&type=MMS");
+                    new docJSON().execute(webUrl + "home/API_Login?" + "user=" + userFullNameEditText.getText().toString() + "&password=" + userLoginEditText.getText().toString()+"&type=MMS");
                 }
             }
         });
 
+    }
+
+    private void showChangeUrl() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.select_dialog_singlechoice);
+        android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(LoginActivity.this);
+        builderSingle.setTitle("Select One Line:");
+        arrayAdapter.add(ServerSSO);
+        arrayAdapter.add(ServerSSL);
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                Url.webUrl = arrayAdapter.getItem(i);
+                tv_urlweb.setText(arrayAdapter.getItem(i));
+                SharedPreferences.Editor editor = luu_Url.edit();
+                editor.putString("url",arrayAdapter.getItem(i));
+                editor.commit();
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
     }
 
     class docJSON extends AsyncTask<String, Integer, String> {

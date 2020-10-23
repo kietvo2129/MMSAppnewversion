@@ -159,7 +159,7 @@
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:paddingVertical="4dp"
-                    android:singleLine="true"
+
                     android:text="Container: " />
                 <TextView
                     android:id="@+id/container"
@@ -172,7 +172,7 @@
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:paddingVertical="4dp"
-                    android:singleLine="true"
+
                     android:text="dashjdghdgd" />
 
                 <ImageView
@@ -196,7 +196,7 @@
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:paddingVertical="8dp"
-                    android:singleLine="true"
+
                     android:text="Check PQC: " />
                 <TextView
                     android:id="@+id/pqc"
@@ -210,7 +210,7 @@
                     android:fadingEdge="horizontal"
                     android:paddingHorizontal="4dp"
                     android:paddingVertical="8dp"
-                    android:singleLine="true"
+
                     android:text="dashjdghdgd" />
             </RelativeLayout>
 

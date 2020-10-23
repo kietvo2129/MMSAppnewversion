@@ -65,7 +65,7 @@
                 android:ellipsize="marquee"
                 style="@style/texthaitam"
                 android:fadingEdge="horizontal"
-                android:singleLine="true" />
+                 />
 
             <ImageView
                 android:id="@+id/title_from_to_dots_divider"
@@ -88,7 +88,7 @@
                 android:layout_toRightOf="@id/title_from_to_dots"
                 android:ellipsize="marquee"
                 android:fadingEdge="horizontal"
-                android:singleLine="true"
+
                 style="@style/texthaitam" />
         </RelativeLayout>
     </LinearLayout>

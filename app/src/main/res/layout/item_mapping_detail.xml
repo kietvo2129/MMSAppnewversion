@@ -236,7 +236,7 @@
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:paddingVertical="4dp"
-                    android:singleLine="true"
+
                     android:text="dashjdghdgd" />
 
                 <ImageView
@@ -261,7 +261,7 @@
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:paddingVertical="4dp"
-                    android:singleLine="true"
+
                     android:text="dashjdghdgd" />
             </RelativeLayout>
 

@@ -73,6 +73,11 @@ public class DivDetailActivity extends AppCompatActivity {
         nodata.setVisibility(View.GONE);
         dialog = new ProgressDialog(this, R.style.AlertDialogCustom);
 
+        scan = findViewById(R.id.scan);
+        input = findViewById(R.id.input);
+        input.setVisibility(View.GONE);
+        scan.setVisibility(View.GONE);
+
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -341,16 +346,16 @@ public class DivDetailActivity extends AppCompatActivity {
             new savechangeDetail().execute(webUrl+"ActualWO/change_gr_dv?value_new=" +
                     value_new.substring(0,value_new.length()-1) +
                     "&value_old=" +
-                    value_old.substring(0,value_new.length()-1)  +
+                    value_old.substring(0,value_old.length()-1)  +
                     "&wmtid=" +
-                    wmtid_end.substring(0,value_new.length()-1));
+                    wmtid_end.substring(0,wmtid_end.length()-1));
 
             Log.e("savechangeDetail",webUrl+"ActualWO/change_gr_dv?value_new=" +
                     value_new.substring(0,value_new.length()-1) +
                     "&value_old=" +
-                    value_old.substring(0,value_new.length()-1)  +
+                    value_old.substring(0,value_old.length()-1)  +
                     "&wmtid=" +
-                    wmtid_end.substring(0,value_new.length()-1));
+                    wmtid_end.substring(0,wmtid_end.length()-1));
 
         }else {
             AlerError.Baoloi("Total input maximum: "+Tong, DivDetailActivity.this);

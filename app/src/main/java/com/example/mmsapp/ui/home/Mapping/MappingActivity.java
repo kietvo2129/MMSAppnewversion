@@ -311,14 +311,16 @@ public class MappingActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (jsonObject.getBoolean("result")) {
+                    dialog.dismiss();
                     Toast.makeText(MappingActivity.this, "Done", Toast.LENGTH_SHORT).show();
                     startActivity(getIntent());
                 } else {
+                    dialog.dismiss();
                     AlerError.Baoloi("Change Quantity reality false. Please check again.", MappingActivity.this);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                AlerError.Baoloi("Change Quantity reality false. Please check again.", MappingActivity.this);
+                AlerError.Baoloi("Could not connect to server", MappingActivity.this);
                 dialog.dismiss();
             }
         }
