@@ -246,10 +246,14 @@ public class MappingActivity extends AppCompatActivity {
 
             @Override
             public void onQCCheck(int position, TextView edittext) {
-                Ml_no = mappingMasterArrayList.get(position).mt_cd;
-                numgr_qty = mappingMasterArrayList.get(position).gr_qty;
-                Intent intent = new Intent(MappingActivity.this, QCCheckActivity.class);
-                startActivity(intent);
+                if (mappingMasterArrayList.get(position).gr_qty == 0){
+                    AlerError.Baoloi("Number gr_qty = 0, please check again", MappingActivity.this);
+                }else {
+                    Ml_no = mappingMasterArrayList.get(position).mt_cd;
+                    numgr_qty = mappingMasterArrayList.get(position).gr_qty;
+                    Intent intent = new Intent(MappingActivity.this, QCCheckActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

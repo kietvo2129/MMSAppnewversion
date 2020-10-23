@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,10 +60,88 @@ public class ManufacturingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manufacturing);
         setTitle("Manufacturing");
         theListView = findViewById(R.id.mainListView);
-
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open_pp_create();
+            }
+        });
         dialog = new ProgressDialog(this,R.style.AlertDialogCustom);
         getData(page);
     }
+
+    private void open_pp_create() {
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ManufacturingActivity.this, android.R.layout.select_dialog_singlechoice);
+        android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(ManufacturingActivity.this);
+        builderSingle.setTitle("Select Process Type:");
+        arrayAdapter.add("Rotary");
+        arrayAdapter.add("Stamp Machine");
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+
+                if (i==0){
+                    new create().execute(webUrl+"ActualWO/Add_w_actual?style_no=" +
+                            HomeFragment.product +
+                            "&at_no=" +
+                            HomeFragment.at_no +
+                            "&name=" +
+                            "ROT");
+                }else if (i==1){
+                    new create().execute(webUrl+"ActualWO/Add_w_actual?style_no=" +
+                            HomeFragment.product +
+                            "&at_no=" +
+                            HomeFragment.at_no +
+                            "&name=" +
+                            "STA");
+                }
+
+
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
+
+    }
+    private class create extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            return NoiDung_Tu_URL(strings[0]);
+        }
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Loading...");
+            dialog.setCancelable(true);
+            dialog.show();
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getBoolean("result")){
+                    Toast.makeText(ManufacturingActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                    getData(1);
+                }else {
+                    Toast.makeText(ManufacturingActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AlerError.Baoloi("Could not connect to server", ManufacturingActivity.this);
+                dialog.dismiss();
+            }
+        }
+
+    }
+
     private void getData(int page) {
         new getData().execute(webUrl+ "ActualWO/Getdataw_actual?rows=50&page="+ page+"&sidx=&sord=asc&at_no="+at_no);
         Log.e("getData",webUrl+ "ActualWO/Getdataw_actual?rows=50&page="+ page+"&sidx=&sord=asc&at_no="+at_no);

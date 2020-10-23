@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="AutoNsi"
+        android:text="Autonsi"
         android:layout_margin="16dp"/>
     <TextView
         android:id="@+id/version"

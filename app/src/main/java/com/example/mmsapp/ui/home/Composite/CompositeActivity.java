@@ -206,7 +206,7 @@ public class CompositeActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             compositeMasterArrayList = new ArrayList<>();
-            String code,start_dt,end_dt,type;
+            String code,start_dt,end_dt,type,name;
 
             try {
 
@@ -226,8 +226,9 @@ public class CompositeActivity extends AppCompatActivity {
                     start_dt = objectRow.getString("start_dt").replace("null","");
                     end_dt = objectRow.getString("end_dt").replace("null","");
                     type = objectRow.getString("type").replace("null","");
+                    name= objectRow.getString("name").replace("null","");
 
-                    compositeMasterArrayList.add(new CompositeMaster(code,start_dt,end_dt,type,i+1+""));
+                    compositeMasterArrayList.add(new CompositeMaster(code,start_dt,end_dt,type,i+1+"",name));
                 }
                 dialog.dismiss();
                 buildrecyc();

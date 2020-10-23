@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -376,10 +377,22 @@ public class QCCheckActivity extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(QCCheckActivity.this, "No data", Toast.LENGTH_SHORT).show();
                     rViewItemJSON.removeAll(rViewItemJSON);
+                    tv_qcheck_checkqty.setEnabled(false);
+                    tv_qcheck_checkqty.setInputType(InputType.TYPE_NULL);
+                    tv_qcheck_checkqty.setFocusable(false);
+                    tv_qcheck_okcheck.setEnabled(false);
+                    tv_qcheck_okcheck.setInputType(InputType.TYPE_NULL);
+                    tv_qcheck_okcheck.setFocusable(false);
                     return;
                 }
                 if (object.getString("result").equals("true") && object.getString("qc_itemcheck_mt").equals("[]")) {
                     Toast.makeText(QCCheckActivity.this, "No data", Toast.LENGTH_SHORT).show();
+                    tv_qcheck_checkqty.setEnabled(false);
+                    tv_qcheck_checkqty.setInputType(InputType.TYPE_NULL);
+                    tv_qcheck_checkqty.setFocusable(false);
+                    tv_qcheck_okcheck.setEnabled(false);
+                    tv_qcheck_okcheck.setInputType(InputType.TYPE_NULL);
+                    tv_qcheck_okcheck.setFocusable(false);
                     dialog.dismiss();
                 }
 
@@ -595,13 +608,17 @@ public class QCCheckActivity extends AppCompatActivity {
     private void savecheckQC() {
         String ITEM_ICDNO_S = "";
         String ITEM_CHECK_ERR_S = "";
+        int tong = 0;
 
         for (int i = 0; i < rViewItemJSON.size(); i++) {
             if (rViewItemJSON.get(i).isCheck()) {
                 ITEM_ICDNO_S = ITEM_ICDNO_S + "," + rViewItemJSON.get(i).getIcdno(); //qc_itemcheck_dt__icdno
                 ITEM_CHECK_ERR_S = ITEM_CHECK_ERR_S + "," + rViewItemJSON.get(i).getQty();// qty error input
+                tong+= Integer.parseInt(rViewItemJSON.get(i).getQty());
             }
         }
+
+
 
         if (tv_qcheck_checkqty.getText().toString().equals("0")) {
             finish();
@@ -629,6 +646,12 @@ public class QCCheckActivity extends AppCompatActivity {
                         }
                     }
 
+                }
+
+
+                if (!tv_qcheck_defectqty.getText().toString().trim().equals(tong+"")){
+                    AlertNotExist("Please enter the total number of errors equal the amount of NG Qty.");
+                    return;
                 }
                 if (ITEM_ICDNO_S.length() > 1 && ITEM_CHECK_ERR_S.length() > 1) {
 

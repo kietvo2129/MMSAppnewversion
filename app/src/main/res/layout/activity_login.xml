@@ -16,19 +16,6 @@
         tools:context=".DMActivity">
 
         <TextView
-            android:layout_marginTop="32dp"
-            android:id="@+id/tv_urlweb"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="8dp"
-            android:drawableRight="@drawable/ic_arrow"
-            android:layout_height="wrap_content"
-            android:paddingRight="8dp"
-            android:gravity="center"
-            android:background="@drawable/box_location_white"
-            android:textColor="#fff"
-            android:paddingVertical="8dp" />
-
-        <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,6 +133,22 @@
         android:textSize="10sp">
 
     </TextView>
+
+    <TextView
+        android:id="@+id/tv_urlweb"
+        android:layout_width="wrap_content"
+        android:drawableRight="@drawable/ic_arrow"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:layout_marginRight="16dp"
+        android:layout_above="@+id/logo"
+        android:background="@drawable/box_location_white"
+        android:textColor="#fff"
+        android:paddingVertical="8dp" />
+
+
     <TextView
         android:id="@+id/logo"
         android:layout_alignParentBottom="true"

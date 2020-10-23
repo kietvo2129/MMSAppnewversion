@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -31,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 import static com.example.mmsapp.Url.webUrl;
 
@@ -73,7 +75,12 @@ public class LoginActivity extends AppCompatActivity {
         h1 = findViewById(R.id.H1);
         h2 = findViewById(R.id.H2);
         dialog = new ProgressDialog(this);
-
+        findViewById(R.id.logo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, webUrl, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         int versionCode = BuildConfig.VERSION_CODE;
         String versionName = BuildConfig.VERSION_NAME;
@@ -85,7 +92,14 @@ public class LoginActivity extends AppCompatActivity {
         String url = luu_Url.getString("url",ServerSSO);
         tv_urlweb = findViewById(R.id.tv_urlweb);
 
-        tv_urlweb.setText(url);
+        if (url.equals(ServerSSO)){
+            tv_urlweb.setText("Online");
+        }else {
+            tv_urlweb.setText("Offline");
+
+        }
+
+
         tv_urlweb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,8 +176,11 @@ public class LoginActivity extends AppCompatActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.select_dialog_singlechoice);
         android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(LoginActivity.this);
         builderSingle.setTitle("Select One Line:");
-        arrayAdapter.add(ServerSSO);
-        arrayAdapter.add(ServerSSL);
+        arrayAdapter.add("Online");
+        arrayAdapter.add("Offline");
+        final ArrayList<String> arrayAdapterUrl = new ArrayList<>();
+        arrayAdapterUrl.add(ServerSSO);
+        arrayAdapterUrl.add(ServerSSL);
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -173,10 +190,10 @@ public class LoginActivity extends AppCompatActivity {
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                Url.webUrl = arrayAdapter.getItem(i);
+                webUrl = arrayAdapterUrl.get(i);
                 tv_urlweb.setText(arrayAdapter.getItem(i));
                 SharedPreferences.Editor editor = luu_Url.edit();
-                editor.putString("url",arrayAdapter.getItem(i));
+                editor.putString("url",arrayAdapterUrl.get(i));
                 editor.commit();
                 dialog.dismiss();
             }

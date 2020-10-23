@@ -49,7 +49,7 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
     }
     class NoteVH extends RecyclerView.ViewHolder {
 
-        TextView code,start_dt,end_dt,type,no;
+        TextView code,start_dt,end_dt,type,no,name;
 
         public NoteVH(View itemView) {
             super(itemView);
@@ -60,7 +60,7 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
             end_dt = itemView.findViewById(R.id.end_dt);
             type = itemView.findViewById(R.id.type);
             no= itemView.findViewById(R.id.no);
-
+            name= itemView.findViewById(R.id.name);
         }
 
 
@@ -70,6 +70,7 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
             end_dt.setText(note.end_dt);
             type.setText(note.type);
             no.setText(note.no);
+            name.setText(note.name);
         }
 
         public void filterList(ArrayList<CompositeMaster> filteredList) {

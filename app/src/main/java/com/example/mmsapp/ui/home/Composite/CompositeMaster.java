@@ -2,13 +2,22 @@ package com.example.mmsapp.ui.home.Composite;
 
 public class CompositeMaster {
 
-    String code,start_dt,end_dt,type,no;
-    public CompositeMaster(String code, String start_dt, String end_dt, String type, String no) {
+    String code,start_dt,end_dt,type,no,name;
+    public CompositeMaster(String code, String start_dt, String end_dt, String type, String no, String name) {
         this.code = code;
         this.start_dt = start_dt;
         this.end_dt = end_dt;
         this.type = type;
         this.no = no;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getNo() {

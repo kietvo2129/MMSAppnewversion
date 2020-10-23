@@ -88,8 +88,8 @@ public class ActualWOAdapter extends ArrayAdapter<ActualWOMaster> {
         viewHolder.date.setText(item.date);
         viewHolder.defect.setText(formatter.format(item.defect));
         viewHolder.target.setText(formatter.format(item.target));
-        viewHolder.product.setText(HomeFragment.product);
-        viewHolder.item_vcd.setText(item.item_vcd);
+        viewHolder.product.setText(item.item_vcd);
+       // viewHolder.item_vcd.setText(item.item_vcd);
         viewHolder.actual.setText(formatter.format(item.actual));
         viewHolder.title_percent.setText("0%");//viewHolder.title_percent.setText(item.actual / item.target +"%");
         viewHolder.name2.setText(item.name);
@@ -97,7 +97,7 @@ public class ActualWOAdapter extends ArrayAdapter<ActualWOMaster> {
         viewHolder.target2.setText(formatter.format(item.target));
         viewHolder.actual2.setText(formatter.format(item.actual));
         viewHolder.title_percent2.setText("0%");//viewHolder.title_percent2.setText(item.actual / item.target +"%");
-        viewHolder.product2.setText(HomeFragment.product);
+        viewHolder.product2.setText(item.item_vcd);
 
 
 

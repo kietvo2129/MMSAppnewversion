@@ -12,11 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/header_p_2"
-            android:background="@drawable/box_location_white"
-            android:padding="4dp"
             android:layout_margin="4dp"
+            android:layout_width="match_parent"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -40,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:padding="4dp"
-                    style="@style/textwhite" />
+                    android:textColor="#DC014C"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -170,7 +177,7 @@
 
 
         </LinearLayout>
-
+        </androidx.cardview.widget.CardView>
         <FrameLayout
             android:id="@+id/frameLayout"
             android:background="@drawable/box_location_white"
