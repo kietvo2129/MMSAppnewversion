@@ -16,9 +16,15 @@ import java.util.List;
 
 public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.NoteVH> {
     private List<CompositeMaster> mNoteList;
-    
 
 
+    private CompositeAdapter.OnItemClickListener mListener;
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+    public void setOnItemClickListener(CompositeAdapter.OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public CompositeAdapter(List<CompositeMaster> noteList) {
         mNoteList = noteList;
@@ -28,7 +34,7 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
     public NoteVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_composite,
                 parent, false);
-        NoteVH evh = new NoteVH(v);
+        NoteVH evh = new NoteVH(v,mListener);
         return evh;
     }
 
@@ -51,7 +57,7 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
 
         TextView code,start_dt,end_dt,type,no,name;
 
-        public NoteVH(View itemView) {
+        public NoteVH(View itemView, final CompositeAdapter.OnItemClickListener listener) {
             super(itemView);
 
             //title = (TextView) itemView.findViewById(R.id.title);
@@ -61,6 +67,17 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
             type = itemView.findViewById(R.id.type);
             no= itemView.findViewById(R.id.no);
             name= itemView.findViewById(R.id.name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(v,position);
+                        }
+                    }
+                }
+            });
         }
 
 
