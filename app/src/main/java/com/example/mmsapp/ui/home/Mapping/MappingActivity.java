@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +65,6 @@ public class MappingActivity extends AppCompatActivity {
         nodata = findViewById(R.id.nodata);
         nodata.setVisibility(View.GONE);
         dialog = new ProgressDialog(MappingActivity.this, R.style.AlertDialogCustom);
-
 
         scan = findViewById(R.id.scan);
         input = findViewById(R.id.input);
@@ -255,8 +255,71 @@ public class MappingActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
+
+            @Override
+            public void onDelete(final int position, ImageView imageView) {
+
+                androidx.appcompat.app.AlertDialog.Builder alertDialog = new androidx.appcompat.app.AlertDialog.Builder(MappingActivity.this, R.style.AlertDialogCustom);
+                alertDialog.setCancelable(false);
+                alertDialog.setTitle("Warning!!!");
+                alertDialog.setMessage("Are you sure Delete: " + mappingMasterArrayList.get(position).mt_cd);
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new onDelete().execute(webUrl + "ActualWO/Xoa_mt_pp_composite?id=" + mappingMasterArrayList.get(position).wmtid);
+                        Log.e("onDelete", webUrl + "ActualWO/Xoa_mt_pp_composite?id=" + mappingMasterArrayList.get(position).wmtid);
+                    }
+                });
+                alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                alertDialog.show();
+
+
+            }
         });
 
+
+    }
+
+    private class onDelete extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            return NoiDung_Tu_URL(strings[0]);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Loading...");
+            dialog.setCancelable(true);
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                if (s.indexOf("false")!=-1){
+                    AlerError.Baoloi("Delete false. Please check again.", MappingActivity.this);
+                    return;
+                }
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getBoolean("result")) {
+                    dialog.dismiss();
+                    Toast.makeText(MappingActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                    startActivity(getIntent());
+                } else {
+                    dialog.dismiss();
+                    AlerError.Baoloi("Delete false. Please check again.", MappingActivity.this);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AlerError.Baoloi("Could not connect to server", MappingActivity.this);
+                dialog.dismiss();
+            }
+        }
 
     }
 

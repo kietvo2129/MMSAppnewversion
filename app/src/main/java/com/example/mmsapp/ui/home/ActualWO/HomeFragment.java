@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +42,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import static com.example.mmsapp.Url.NoiDung_Tu_URL;
 
@@ -224,7 +227,7 @@ public class HomeFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             actualWOMasterArrayList = new ArrayList<>();
-            String id_actualpr,at_no,type,product,remark,style_nm;
+            String id_actualpr,at_no,type,product,remark,style_nm,reg_dt;
             int target;
 
             try {
@@ -250,7 +253,9 @@ public class HomeFragment extends Fragment {
                     remark = objectRow.getString("remark").replace("null","");
                     target = objectRow.getInt("target");
                     style_nm = objectRow.getString("style_nm");
-                    actualWOMasterArrayList.add(new ActualWOHomeMaster(id_actualpr,at_no,type,product,remark,style_nm,target));
+                    reg_dt = objectRow.getString("reg_dt").replace("/Date(","").replace("000)/","");
+                    String dateconver = getDate(Long.parseLong(reg_dt));
+                    actualWOMasterArrayList.add(new ActualWOHomeMaster(id_actualpr,at_no,type,product,remark,style_nm,target,dateconver));
                 }
                 dialog.dismiss();
                 setListView();
@@ -261,6 +266,13 @@ public class HomeFragment extends Fragment {
             }
         }
 
+    }
+
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("yyyy-MM-dd", cal).toString();
+        return date;
     }
 
     private void setListView() {
@@ -317,7 +329,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String id_actualpr,at_no,type,product,remark,style_nm;
+            String id_actualpr,at_no,type,product,remark,style_nm,reg_dt;
             int target;
             try {
 
@@ -342,7 +354,11 @@ public class HomeFragment extends Fragment {
                     remark = objectRow.getString("remark").replace("null","");
                     target = objectRow.getInt("target");
                     style_nm = objectRow.getString("style_nm");
-                    actualWOMasterArrayList.add(new ActualWOHomeMaster(id_actualpr,at_no,type,product,remark,style_nm,target));
+                    reg_dt = objectRow.getString("reg_dt").replace("/Date(","").replace("000)/","");
+
+                    String dateconver = getDate(Long.parseLong(reg_dt));
+
+                    actualWOMasterArrayList.add(new ActualWOHomeMaster(id_actualpr,at_no,type,product,remark,style_nm,target,dateconver));
                 }
                 dialog.dismiss();
                 actualWOHomeAdapter.notifyDataSetChanged();

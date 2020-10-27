@@ -3,6 +3,7 @@ package com.example.mmsapp.ui.home.Composite;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,13 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
 
 
     private CompositeAdapter.OnItemClickListener mListener;
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
+
+        void ondelete(int position);
     }
+
     public void setOnItemClickListener(CompositeAdapter.OnItemClickListener listener) {
         mListener = listener;
     }
@@ -34,7 +39,7 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
     public NoteVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_composite,
                 parent, false);
-        NoteVH evh = new NoteVH(v,mListener);
+        NoteVH evh = new NoteVH(v, mListener);
         return evh;
     }
 
@@ -49,35 +54,50 @@ public class CompositeAdapter extends RecyclerView.Adapter<CompositeAdapter.Note
             notifyItemInserted(mNoteList.size());
         }
     }
+
     @Override
     public int getItemCount() {
         return mNoteList != null ? mNoteList.size() : 0;
     }
+
     class NoteVH extends RecyclerView.ViewHolder {
 
-        TextView code,start_dt,end_dt,type,no,name;
+        TextView code, start_dt, end_dt, type, no, name;
+        ImageView im_delete;
 
         public NoteVH(View itemView, final CompositeAdapter.OnItemClickListener listener) {
             super(itemView);
 
-            //title = (TextView) itemView.findViewById(R.id.title);
+            im_delete = itemView.findViewById(R.id.im_delete);
             code = itemView.findViewById(R.id.code);
             start_dt = itemView.findViewById(R.id.start_dt);
             end_dt = itemView.findViewById(R.id.end_dt);
             type = itemView.findViewById(R.id.type);
-            no= itemView.findViewById(R.id.no);
-            name= itemView.findViewById(R.id.name);
+            no = itemView.findViewById(R.id.no);
+            name = itemView.findViewById(R.id.name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(v,position);
+                            listener.onItemClick(v, position);
                         }
                     }
                 }
             });
+            im_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.ondelete(position);
+                        }
+                    }
+                }
+            });
+
         }
 
 

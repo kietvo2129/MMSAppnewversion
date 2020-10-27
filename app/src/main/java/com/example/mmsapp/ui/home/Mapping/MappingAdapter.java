@@ -3,6 +3,7 @@ package com.example.mmsapp.ui.home.Mapping;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,7 @@ public class MappingAdapter extends RecyclerView.Adapter<MappingAdapter.NoteVH> 
         void onItemClick(View view, int position);
         void onQuantityChange(int position,TextView edittext);
         void onQCCheck(int position,TextView edittext);
-
+        void onDelete(int position,ImageView imageView);
     }
 
     public void setOnItemClickListener(MappingAdapter.OnItemClickListener listener) {
@@ -63,12 +64,13 @@ public class MappingAdapter extends RecyclerView.Adapter<MappingAdapter.NoteVH> 
     class NoteVH extends RecyclerView.ViewHolder {
 
         TextView mt_cd,num_gr_qty,num_gr_qtyreal,pqc,container,no,mtcnt;
+        ImageView im_delete;
 
         public NoteVH(View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             //title = (TextView) itemView.findViewById(R.id.title);
-
+            im_delete= itemView.findViewById(R.id.im_delete);
             no= itemView.findViewById(R.id.no);
             mt_cd = itemView.findViewById(R.id.mt_cd);
             num_gr_qty = itemView.findViewById(R.id.num_gr_qty);
@@ -109,10 +111,27 @@ public class MappingAdapter extends RecyclerView.Adapter<MappingAdapter.NoteVH> 
                     }
                 }
             });
+            im_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDelete(position,im_delete);
+                        }
+                    }
+                }
+            });
         }
 
 
         public void bindData(MappingMaster note) {
+            if (note.gr_qty>0){
+                im_delete.setVisibility(View.GONE);
+            }else {
+                im_delete.setVisibility(View.VISIBLE);
+
+            }
             DecimalFormat formatter = new DecimalFormat("#,###,###");
             no.setText(note.no);
             mt_cd.setText(note.mt_cd);

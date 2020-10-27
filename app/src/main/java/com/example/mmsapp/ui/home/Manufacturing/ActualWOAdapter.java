@@ -63,6 +63,7 @@ public class ActualWOAdapter extends ArrayAdapter<ActualWOMaster> {
             viewHolder.actual2 = cell.findViewById(R.id.actual2);
             viewHolder.name2 = cell.findViewById(R.id.name2);
             viewHolder.product2 = cell.findViewById(R.id.product2);
+            viewHolder.no = cell.findViewById(R.id.no);
 
             viewHolder.detail = cell.findViewById(R.id.detail);
             cell.setTag(viewHolder);
@@ -83,7 +84,7 @@ public class ActualWOAdapter extends ArrayAdapter<ActualWOMaster> {
 
 //        // bind data from selected element to view through view holder
         DecimalFormat formatter = new DecimalFormat("#,###,###");
-
+        viewHolder.no.setText(position+1+"");
         viewHolder.name.setText(item.name);
         viewHolder.date.setText(item.date);
         viewHolder.defect.setText(formatter.format(item.defect));
@@ -140,7 +141,7 @@ public class ActualWOAdapter extends ArrayAdapter<ActualWOMaster> {
     private static class ViewHolder {
         TextView id_actual,name,date,defect,target,product,item_vcd,actual,title_percent;
 
-        TextView title_percent2,defect2,target2,actual2,name2,product2;
+        TextView title_percent2,defect2,target2,actual2,name2,product2,no;
         RecyclerView recycview;
         LinearLayout detail;
 

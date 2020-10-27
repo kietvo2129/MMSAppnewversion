@@ -19,7 +19,7 @@
             android:background="@color/bgTitleLeft"
             android:gravity="center"
             android:paddingHorizontal="32dp"
-            android:paddingVertical="4dp"
+            android:paddingVertical="8dp"
             android:text="" />
 
         <TextView
@@ -29,6 +29,12 @@
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="131" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/im_delete"/>
 
         <TextView
             android:id="@+id/gr_qty"
@@ -80,10 +86,12 @@
             <TextView
                 android:id="@+id/num_gr_qtyreal"
                 style="@style/textwhite"
+                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="25.025" />
+                android:minWidth="40dp"
+                android:text="0" />
         </androidx.cardview.widget.CardView>
 
         <View

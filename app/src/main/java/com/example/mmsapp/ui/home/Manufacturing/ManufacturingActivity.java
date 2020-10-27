@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.example.mmsapp.R;
 import com.example.mmsapp.Url;
 import com.example.mmsapp.ui.home.ActualWO.HomeFragment;
 import com.example.mmsapp.ui.home.Composite.CompositeActivity;
+import com.example.mmsapp.ui.home.Mapping.MappingActivity;
 import com.ramotion.foldingcell.FoldingCell;
 
 import org.json.JSONArray;
@@ -52,7 +54,7 @@ public class ManufacturingActivity extends AppCompatActivity {
     public static String style_no ="";
     public static String style_name ="";
     String at_no = HomeFragment.at_no;
-
+    ImageView im_delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +287,7 @@ public class ManufacturingActivity extends AppCompatActivity {
 
                 recyclerView =  view.findViewById(R.id.recycview);
                 totaldetail =  view.findViewById(R.id.totaldetail);
+                im_delete =  view.findViewById(R.id.im_delete);
                 viewdetail =view;
                 vitribam = pos;
                 content_request_btn =  view.findViewById(R.id.content_request_btn);
@@ -300,8 +303,33 @@ public class ManufacturingActivity extends AppCompatActivity {
                     }
                 });
                 loaddatadetail(pos);
+
+                im_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        androidx.appcompat.app.AlertDialog.Builder alertDialog = new androidx.appcompat.app.AlertDialog.Builder(ManufacturingActivity.this, R.style.AlertDialogCustom);
+                        alertDialog.setCancelable(false);
+                        alertDialog.setTitle("Warning!!!");
+                        alertDialog.setMessage("Are you sure Delete?");
+                        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new onDelete().execute(webUrl + "ActualWO/xoa_wactual_con?id=" + actualWOMasterArrayList.get(pos).id_actual);
+                                Log.e("onDelete", webUrl + "ActualWO/xoa_wactual_con?id=" + actualWOMasterArrayList.get(pos).id_actual);
+                            }
+                        });
+                        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                        alertDialog.show();
+
+                    }
+                });
             }
         });
+
 
         theListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -321,7 +349,39 @@ public class ManufacturingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private class onDelete extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            return NoiDung_Tu_URL(strings[0]);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Loading...");
+            dialog.setCancelable(true);
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.getBoolean("result")){
+                    Toast.makeText(ManufacturingActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                    startActivity(getIntent());
+                }else {
+                    AlerError.Baoloi(jsonObject.getString("kq"), ManufacturingActivity.this);
+                }
+                dialog.dismiss();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AlerError.Baoloi("Could not connect to server", ManufacturingActivity.this);
+                dialog.dismiss();
+            }
+        }
 
     }
 

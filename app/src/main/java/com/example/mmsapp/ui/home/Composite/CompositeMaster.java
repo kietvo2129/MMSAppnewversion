@@ -2,14 +2,42 @@ package com.example.mmsapp.ui.home.Composite;
 
 public class CompositeMaster {
 
-    String code,start_dt,end_dt,type,no,name;
-    public CompositeMaster(String code, String start_dt, String end_dt, String type, String no, String name) {
+    String code, start_dt, end_dt, type, no, name, use_yn, pmid, staff_tp;
+
+    public CompositeMaster(String code, String start_dt, String end_dt, String type, String no, String name, String use_yn, String pmid, String staff_tp) {
         this.code = code;
         this.start_dt = start_dt;
         this.end_dt = end_dt;
         this.type = type;
         this.no = no;
         this.name = name;
+        this.use_yn = use_yn;
+        this.pmid = pmid;
+        this.staff_tp = staff_tp;
+    }
+
+    public String getPmid() {
+        return pmid;
+    }
+
+    public void setPmid(String pmid) {
+        this.pmid = pmid;
+    }
+
+    public String getStaff_tp() {
+        return staff_tp;
+    }
+
+    public void setStaff_tp(String staff_tp) {
+        this.staff_tp = staff_tp;
+    }
+
+    public String getUse_yn() {
+        return use_yn;
+    }
+
+    public void setUse_yn(String use_yn) {
+        this.use_yn = use_yn;
     }
 
     public String getName() {
