@@ -109,7 +109,7 @@
                     android:fadingEdge="horizontal"
                     android:paddingVertical="8dp"
 
-                    android:text="Check PQC: " />
+                    android:text="Container: " />
                 <TextView
                     android:id="@+id/container"
                     style="@style/texthaitam"
