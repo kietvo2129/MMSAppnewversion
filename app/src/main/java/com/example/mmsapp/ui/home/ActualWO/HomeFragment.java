@@ -56,6 +56,9 @@ public class HomeFragment extends Fragment {
     ArrayList<ActualWOHomeMaster> actualWOMasterArrayList;
     ActualWOHomeAdapter actualWOHomeAdapter;
 
+    EditText edt_search;
+    Button btn_search;
+
     public static String at_no ="";
     public static String product ="";
     EditText Containercode;
@@ -63,6 +66,19 @@ public class HomeFragment extends Fragment {
             ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
+        edt_search = root.findViewById(R.id.edt_search);
+        btn_search = root.findViewById(R.id.btn_search);
+
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new getData().execute(webUrl+ "ActualWO/Getdataw_actual_primary?rows=50&page="+ 1+"&sidx=&sord=asc"+ "&at_no=" + edt_search.getText().toString().trim());
+                Log.e("getData",webUrl+ "ActualWO/Getdataw_actual_primary?rows=50&page="+ 1+"&sidx=&sord=asc"+ "&at_no=" + edt_search.getText().toString().trim());
+            }
+        });
+
+
+
         dialog = new ProgressDialog(getContext(),R.style.AlertDialogCustom);
 
         root.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {

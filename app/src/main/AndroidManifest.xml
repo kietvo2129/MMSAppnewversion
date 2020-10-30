@@ -44,6 +44,7 @@
             android:parentActivityName=".ui.home.Manufacturing.ManufacturingActivity" />
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".LoginActivity"

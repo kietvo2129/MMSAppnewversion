@@ -62,7 +62,7 @@ public class CompositeActivity extends AppCompatActivity {
     ArrayList<VitridungmayMaster> vitridungmayMasterArrayList;
     EditText tvid;
     TextView StaffType;
-
+    BoomMenuButton mapping;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +135,7 @@ public class CompositeActivity extends AppCompatActivity {
             }
         });
 
-        BoomMenuButton mapping = (BoomMenuButton) findViewById(R.id.mapping);
+        mapping = (BoomMenuButton) findViewById(R.id.mapping);
 
         if (ManufacturingActivity.style_name.equals("STA")) {
             mapping.setButtonEnum(ButtonEnum.Ham);
@@ -272,6 +272,7 @@ public class CompositeActivity extends AppCompatActivity {
                 if (jsonArray.length() == 0) {
                     dialog.dismiss();
                     nodata.setVisibility(View.VISIBLE);
+                    mapping.setVisibility(View.GONE);
                     return;
                 }
 
@@ -294,6 +295,7 @@ public class CompositeActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
                 nodata.setVisibility(View.VISIBLE);
+                mapping.setVisibility(View.GONE);
                 AlerError.Baoloi("Could not connect to server", CompositeActivity.this);
                 dialog.dismiss();
             }
@@ -303,6 +305,23 @@ public class CompositeActivity extends AppCompatActivity {
 
     private void buildrecyc() {
         nodata.setVisibility(View.GONE);
+
+        int typemachine = 0;
+        int typeworker = 0;
+        for (int i=0;i<compositeMasterArrayList.size();i++){
+            if (compositeMasterArrayList.get(i).getType().equals("machine")){
+                typemachine = 1;
+            }
+            if (compositeMasterArrayList.get(i).getType().equals("worker")){
+                typeworker = 1;
+            }
+        }
+        if (typemachine == 1 && typeworker==1){
+            mapping.setVisibility(View.VISIBLE);
+        }else {
+            mapping.setVisibility(View.GONE);
+        }
+
 
         final LinearLayoutManager mLayoutManager;
         recyclerView.setHasFixedSize(true);

@@ -7,15 +7,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorxam">
 
+    <RelativeLayout
+        android:id="@+id/rlsearch"
+        android:background="@color/colorbackgound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edt_search"
+            android:layout_toStartOf="@+id/btn_search"
+            android:layout_width="match_parent"
+            android:textColor="#fff"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:layout_below="@+id/rlsearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_actual_wo" />
 
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
 
+        android:visibility="gone"
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

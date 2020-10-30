@@ -301,7 +301,8 @@ public class MappingActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                if (s.indexOf("false")!=-1){
+                dialog.dismiss();
+                if (s.trim().indexOf("false")!=-1){
                     AlerError.Baoloi("Delete false. Please check again.", MappingActivity.this);
                     return;
                 }
