@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment {
     private ProgressDialog dialog;
     ArrayList<ActualWOHomeMaster> actualWOMasterArrayList;
     ActualWOHomeAdapter actualWOHomeAdapter;
-
     EditText edt_search;
     Button btn_search;
 
@@ -318,8 +317,6 @@ public class HomeFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 at_no = actualWOMasterArrayList.get(position).at_no;
                 product = actualWOMasterArrayList.get(position).product;
-
-
 
                 Intent intent = new Intent(getContext(), ManufacturingActivity.class);
                 startActivity(intent);

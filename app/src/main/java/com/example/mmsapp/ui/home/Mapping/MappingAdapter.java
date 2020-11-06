@@ -1,5 +1,6 @@
 package com.example.mmsapp.ui.home.Mapping;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mmsapp.R;
+import com.example.mmsapp.ui.home.ActualWO.HomeFragment;
 import com.example.mmsapp.ui.home.Manufacturing.ManufacturingActivity;
 
 import java.text.DecimalFormat;
@@ -132,6 +134,17 @@ public class MappingAdapter extends RecyclerView.Adapter<MappingAdapter.NoteVH> 
                 im_delete.setVisibility(View.VISIBLE);
 
             }
+
+            if (!ManufacturingActivity.checkLast.equals("last")){
+                pqc.setEnabled(false);
+                pqc.setBackgroundColor(Color.parseColor("#a9a9a9"));
+            }else {
+                pqc.setEnabled(true);
+                pqc.setBackgroundColor(Color.parseColor("#009688"));
+            }
+
+
+
             DecimalFormat formatter = new DecimalFormat("#,###,###");
             no.setText(note.no);
             mt_cd.setText(note.mt_cd);

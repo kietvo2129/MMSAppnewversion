@@ -55,6 +55,7 @@ public class ManufacturingActivity extends AppCompatActivity {
     public static String style_name ="";
     String at_no = HomeFragment.at_no;
     ImageView im_delete;
+    public static String checkLast ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,6 +300,11 @@ public class ManufacturingActivity extends AppCompatActivity {
                         qc_code = actualWOMasterArrayList.get(pos).item_vcd;
                         style_no = actualWOMasterArrayList.get(pos).product;
                         style_name = actualWOMasterArrayList.get(pos).name;
+                        if (pos == actualWOMasterArrayList.size()-1){
+                            checkLast = "last";
+                        }else {
+                            checkLast = "";
+                        }
                         startActivity(intent);
                     }
                 });

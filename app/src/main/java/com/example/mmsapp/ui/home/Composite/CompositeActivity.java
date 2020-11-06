@@ -652,6 +652,8 @@ public class CompositeActivity extends AppCompatActivity {
                     AlerError.Baoloi("Start day was bigger End day. That is wrong", CompositeActivity.this);
                 } else if (jsonObject.getString("result").equals("3")) {
                     //   xacnhan_datontai(jsonObject.getString("update"),jsonObject.getString("start"),jsonObject.getString("end"));
+                }else if (!jsonObject.getBoolean("result")){
+                    AlerError.Baoloi(jsonObject.getString("message"), CompositeActivity.this);
                 }
                 dialog.dismiss();
             } catch (JSONException e) {
